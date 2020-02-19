@@ -69,11 +69,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _option2 = _interopRequireDefault(_option);
 	
-	var _token = __webpack_require__(6);
+	var _token = __webpack_require__(10);
 	
 	var _token2 = _interopRequireDefault(_token);
 	
-	var _main = __webpack_require__(7);
+	var _main = __webpack_require__(11);
 	
 	var _main2 = _interopRequireDefault(_main);
 	
@@ -562,6 +562,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var PropTypes = __webpack_require__(2);
 	var React = __webpack_require__(3);
 	var addClass = __webpack_require__(4);
+	var omit = __webpack_require__(6);
 	
 	var Option = function (_React$Component) {
 	  _inherits(Option, _React$Component);
@@ -580,7 +581,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        props.className = addClass(props.className, 'ic-tokeninput-selected');
 	        props.ariaSelected = true;
 	      }
-	      return React.createElement('div', props);
+	      return div(omit(props, ['isSelected', 'isFocusable']));
 	    }
 	  }]);
 	
@@ -619,6 +620,118 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ }),
 /* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/*!
+	 * object.omit <https://github.com/jonschlinkert/object.omit>
+	 *
+	 * Copyright (c) 2014-2015, Jon Schlinkert.
+	 * Licensed under the MIT License.
+	 */
+	
+	'use strict';
+	
+	var isObject = __webpack_require__(7);
+	var forOwn = __webpack_require__(8);
+	
+	module.exports = function omit(obj, keys) {
+	  if (!isObject(obj)) return {};
+	
+	  keys = [].concat.apply([], [].slice.call(arguments, 1));
+	  var last = keys[keys.length - 1];
+	  var res = {}, fn;
+	
+	  if (typeof last === 'function') {
+	    fn = keys.pop();
+	  }
+	
+	  var isFunction = typeof fn === 'function';
+	  if (!keys.length && !isFunction) {
+	    return obj;
+	  }
+	
+	  forOwn(obj, function(value, key) {
+	    if (keys.indexOf(key) === -1) {
+	
+	      if (!isFunction) {
+	        res[key] = value;
+	      } else if (fn(value, key, obj)) {
+	        res[key] = value;
+	      }
+	    }
+	  });
+	  return res;
+	};
+
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports) {
+
+	/*!
+	 * is-extendable <https://github.com/jonschlinkert/is-extendable>
+	 *
+	 * Copyright (c) 2015, Jon Schlinkert.
+	 * Licensed under the MIT License.
+	 */
+	
+	'use strict';
+	
+	module.exports = function isExtendable(val) {
+	  return typeof val !== 'undefined' && val !== null
+	    && (typeof val === 'object' || typeof val === 'function');
+	};
+
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/*!
+	 * for-own <https://github.com/jonschlinkert/for-own>
+	 *
+	 * Copyright (c) 2014-2017, Jon Schlinkert.
+	 * Released under the MIT License.
+	 */
+	
+	'use strict';
+	
+	var forIn = __webpack_require__(9);
+	var hasOwn = Object.prototype.hasOwnProperty;
+	
+	module.exports = function forOwn(obj, fn, thisArg) {
+	  forIn(obj, function(val, key) {
+	    if (hasOwn.call(obj, key)) {
+	      return fn.call(thisArg, obj[key], key, obj);
+	    }
+	  });
+	};
+
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports) {
+
+	/*!
+	 * for-in <https://github.com/jonschlinkert/for-in>
+	 *
+	 * Copyright (c) 2014-2017, Jon Schlinkert.
+	 * Released under the MIT License.
+	 */
+	
+	'use strict';
+	
+	module.exports = function forIn(obj, fn, thisArg) {
+	  for (var key in obj) {
+	    if (fn.call(thisArg, obj[key], key, obj) === false) {
+	      break;
+	    }
+	  }
+	};
+
+
+/***/ }),
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -690,7 +803,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = Token;
 
 /***/ }),
-/* 7 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -706,8 +819,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	var PropTypes = __webpack_require__(2);
 	var React = __webpack_require__(3);
 	var Combobox = __webpack_require__(1);
-	var Token = __webpack_require__(6);
-	var classnames = __webpack_require__(8);
+	var Token = __webpack_require__(10);
+	var classnames = __webpack_require__(12);
 	
 	var TokenInput = function (_React$Component) {
 	  _inherits(TokenInput, _React$Component);
@@ -826,7 +939,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = TokenInput;
 
 /***/ }),
-/* 8 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!

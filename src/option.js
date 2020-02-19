@@ -1,6 +1,7 @@
 var PropTypes = require('prop-types');
 var React = require('react');
 var addClass = require('./add-class');
+var omit = require('object.omit');
 
 class Option extends React.Component {
   static propTypes = {
@@ -37,9 +38,7 @@ class Option extends React.Component {
       props.className = addClass(props.className, 'ic-tokeninput-selected');
       props.ariaSelected = true;
     }
-    return (
-      <div {...props} />
-    );
+    return div(omit(props, ['isSelected', 'isFocusable']));
   }
 }
 
