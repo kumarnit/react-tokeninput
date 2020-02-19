@@ -581,7 +581,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        props.className = addClass(props.className, 'ic-tokeninput-selected');
 	        props.ariaSelected = true;
 	      }
-	      return div(omit(props, ['isSelected', 'isFocusable']));
+	
+	      return React.createElement('div', omit(props, ['isSelected', 'isFocusable']));
 	    }
 	  }]);
 	
